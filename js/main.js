@@ -1,6 +1,6 @@
 
-var System =
-  ClassTreeLoader(["System"],
+const System =
+  new ClassTreeLoader(["System"],
     new ProcessLoader(
       JavaScript,
       new URILoader( "GET", "js", "", ".js" )
@@ -8,4 +8,8 @@ var System =
   )
 ;
 
-System.out.println( "Hello", System.out.getWorld() );
+var sysout = new System.out();
+
+System.out.println( sysout.getHello(), System.out.getWorld() );
+
+System.out.println("It Works!");

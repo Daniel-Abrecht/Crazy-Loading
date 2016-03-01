@@ -31,20 +31,22 @@ function ClassTreeLoader( path, loader ){
   function callMathod(){
     let a = Array.prototype.slice.apply(arguments);
     a.push(loadContent(base));
-    return Promise.all(a)
-      .then(function(a){
+    return MethodProxyPromise.proxify(
+      Promise.all(a).then(function(a){
         let cls = a.pop();
         return cls[method].apply(cls,a);
-      });
+      })
+    );
   }
 
-  function create(){
-    let a = Array.prototype.slice.apply(arguments);
-    a.push(loadContent(path));
-    return Promise.all(a)
-      .then(function(a){
-        return new (Function.prototype.bind.apply(a.pop(),a));
-      });
+  function create( t, args ){
+    let a = Array.prototype.slice.apply( args );
+    a = [loadContent(path)].concat(a);
+    return MethodProxyPromise.proxify(
+      Promise.all(a).then(function(a){
+        return new (Function.prototype.bind.apply(a[0],a));
+      })
+    );
   }
 
   function loadContent( path ){
