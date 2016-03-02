@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Example</title>
+    <script src="../lib/ProxyPromise.js"></script>
+    <script src="../lib/MethodProxyPromise.js"></script>
+    <script src="../lib/URILoader.js"></script>
+    <script src="../lib/JavaScript.js"></script>
+    <script src="../lib/ProcessLoader.js"></script>
+    <script src="../lib/ClassTreeLoader.js"></script>
+  </head>
+  <body style="font-family: monospace; white-space: pre-wrap;">
+    <script>
+
+const System =
+  new ClassTreeLoader(["System"],
+    new ProcessLoader(
+      JavaScript,
+      new URILoader( "GET", "js", "", ".js" )
+    )
+  )
+;
+
+var sysout = new System.out();
+
+System.out.println( sysout.getHello(), System.out.getWorld() );
+
+System.out.println("It Works!");
+
+    </script>
+  </body>
+</html>
