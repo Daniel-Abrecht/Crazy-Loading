@@ -11,11 +11,19 @@ const MethodProxyPromise = createProxyPromise({
     });
   }
 
-  }, function( promise ){
-    return function(){
+  }, function MethodProxyPromiseMethodFactory( promise ){
+    return function MethodProxyPromiseMethod(){
       let t = this;
-      let a = arguments;
-      return promise.then( (c) => c.apply(t,a) );
+      let a = Array.prototype.slice.call(arguments);
+      a.push(this);
+      a.push(promise);
+      return MethodProxyPromise.all.call(MethodProxyPromise, a)
+               .then(function( args ){
+                 var a = Array.prototype.slice.apply(args);
+                 var c = a.pop();
+                 var t = a.pop();
+                 return c.apply(t,a);
+               });
     };
   }
 

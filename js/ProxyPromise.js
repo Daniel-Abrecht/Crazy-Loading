@@ -92,6 +92,8 @@ function createProxyPromise( handler, overlayFactory ){
 
   function getter( t, key ){
     var promise = t["\0PromiseProxyPromise\0"];
+    if( key == "\0PromiseProxyPromise\0" )
+      return promise;
     if(key in promise){
       if( promise[key] instanceof Function ){
         return createDeproxyPromiseProxy( promise, promise[key] );
@@ -175,7 +177,7 @@ function createProxyPromise( handler, overlayFactory ){
 ////////////////////////////////////////////////////////////////
 
   function createDeproxyPromiseProxy( promise, method ){
-    return function(){
+    return function DeproxyPromiseProxyFunction(){
       function deproxyfy( o ){
         if( o instanceof Array )
           return o.map( deproxyfy );
