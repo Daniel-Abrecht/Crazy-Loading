@@ -17,7 +17,7 @@ const MethodProxyPromise = createProxyPromise({
       let a = Array.prototype.slice.call(arguments);
       a.push(this);
       a.push(promise);
-      return MethodProxyPromise.all.call(MethodProxyPromise, a)
+      return MethodProxyPromise.all(a)
                .then(function( args ){
                  var a = Array.prototype.slice.apply(args);
                  var c = a.pop();

@@ -8,7 +8,7 @@ class JavaScript {
     if( sourceURL )
       sourceURL = '//# sourceURL=' + sourceURL.replace(/\n/g,' ');
     else sourceURL = '';
-    return eval( "(class "+ name + " {\n" + code + "\n})\n" + sourceURL );
+    return eval( "(class " + name + " {\n" + code + "\n})\n" + sourceURL );
   }
 
 }

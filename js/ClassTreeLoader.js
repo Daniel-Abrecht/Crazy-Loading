@@ -40,10 +40,11 @@ function ClassTreeLoader( path, loader ){
 
   function create( t, args ){
     let a = Array.prototype.slice.apply( args );
-    a = [loadContent(path)].concat(a);
+    a.push(loadContent(path));
     return MethodProxyPromise.all(a)
       .then(function(a){
-        return new (Function.prototype.bind.apply(a[0],a));
+        var c = a.pop();
+        return new c(...a);
       });
   }
 

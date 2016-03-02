@@ -49,9 +49,7 @@ function createProxyPromise( handler, overlayFactory ){
 
   function ProxyPromise(){
     return proxify(
-      new (ProxyPromise_NativePromise.bind.apply(ProxyPromise_NativePromise,
-        [ProxyPromise_NativePromise].concat(Array.prototype.slice.apply(arguments))
-      ))
+      new ProxyPromise_NativePromise(...Array.prototype.slice.apply(arguments))
     );
   };
 
@@ -87,7 +85,7 @@ function createProxyPromise( handler, overlayFactory ){
   function constructor( t, args ){
     if(handler.constructor)
       return proxifyIfPromise( handler.constructor.call( this, t, args ) );
-    return proxifyIfPromise( new (t.bind.apply(t,[t].concat(args))) );
+    return proxifyIfPromise( new t(...args) );
   }
 
   function getter( t, key ){
